@@ -1,0 +1,14 @@
+﻿CREATE TABLE [dbo].[UserAccount](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CreationDate] [datetime] NOT NULL DEFAULT getdate(),
+	[Username] [varchar](50) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+	[Password] [varchar](50) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+ CONSTRAINT [PK_UsersAcount] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [IX_Username] UNIQUE NONCLUSTERED 
+(
+	[Username] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
