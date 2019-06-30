@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ei-web-api", "ei-web-api\ei-web-api.csproj", "{1955F10F-83F8-4133-9892-0803BAD7CE55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ei-web-api", "src\ei-web-api\ei-web-api.csproj", "{1955F10F-83F8-4133-9892-0803BAD7CE55}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "EntrenamientoImaginativoDatabase", "EntrenamientoImaginativoDatabase\EntrenamientoImaginativoDatabase.sqlproj", "{DBE1ADF5-AE8D-43AD-8B45-AAD595EAC61B}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ei-database", "src\ei-database\ei-database.sqlproj", "{DBE1ADF5-AE8D-43AD-8B45-AAD595EAC61B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ei-core", "src\ei-core\ei-core.csproj", "{BF918ACE-2D5E-45BF-9487-9EA47D566304}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ei-infrastructure", "src\ei-infrastructure\ei-infrastructure.csproj", "{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,30 @@ Global
 		{DBE1ADF5-AE8D-43AD-8B45-AAD595EAC61B}.Release|x86.ActiveCfg = Release|Any CPU
 		{DBE1ADF5-AE8D-43AD-8B45-AAD595EAC61B}.Release|x86.Build.0 = Release|Any CPU
 		{DBE1ADF5-AE8D-43AD-8B45-AAD595EAC61B}.Release|x86.Deploy.0 = Release|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Debug|x64.Build.0 = Debug|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Debug|x86.Build.0 = Debug|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Release|x64.ActiveCfg = Release|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Release|x64.Build.0 = Release|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF918ACE-2D5E-45BF-9487-9EA47D566304}.Release|x86.Build.0 = Release|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Debug|x64.Build.0 = Debug|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Debug|x86.Build.0 = Debug|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Release|x64.ActiveCfg = Release|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Release|x64.Build.0 = Release|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Release|x86.ActiveCfg = Release|Any CPU
+		{D87D1335-21DE-4ADA-8BE2-639B7E30CCCD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
