@@ -4,7 +4,7 @@ using Xunit;
 
 namespace ei_unit_tests.core.Entities.UserAccountTests
 {
-    public class UserAccountMatchesPasswords
+    public class UserAccountPasswordMatches
     {
         private const int TestId = 28;
         private readonly DateTime _testCreationDate = new DateTime(1980, 1, 1);
