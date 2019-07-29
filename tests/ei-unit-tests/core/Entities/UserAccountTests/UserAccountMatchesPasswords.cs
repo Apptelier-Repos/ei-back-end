@@ -2,7 +2,7 @@ using System;
 using ei_core.Entities.UserAccountAggregate;
 using Xunit;
 
-namespace ei_unit_tests.core.Entities.AccessControl
+namespace ei_unit_tests.core.Entities.UserAccountTests
 {
     public class UserAccountMatchesPasswords
     {
