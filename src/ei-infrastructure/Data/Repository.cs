@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Threading.Tasks;
+using ei_core.Entities.UserAccountAggregate;
 using ei_core.Interfaces;
 using ei_infrastructure.Data.Queries;
 
@@ -17,9 +18,13 @@ namespace ei_infrastructure.Data
             _connection = connection;
         }
 
-        public async Task<IUserAccountDto> FindUserAccountByIdAsync(int id)
+        public async Task<UserAccount> FindUserAccountByIdAsync(int id)
         {
             var userAccountDto = await new QueriesService(_connection).GetUserAccountByIdAsync(id);
+            var userAccountRootAggregate = new UserAccount(userAccountDto.Id, userAccountDto.CreationDate, userAccountDto.Username, userAccountDto.Password);
+
+            //return userAccountRootAggregate;
+
             // TODO:
             // new is glue, therefore Autofac should be used intead here. This assembly should be registered and located by Autofac.
             // Organize the DTO namespaces, classes, interfaces in both core and infra.
