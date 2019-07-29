@@ -5,6 +5,6 @@ namespace ei_core.Interfaces
 {
     public interface IRepository<T> where T : BaseEntity, IIdentifiable
     {
-        Task<T> GetByIdAsync(int id);
+        Task<T> FindByIdAsync(int id);
     }
 }
