@@ -1,5 +1,5 @@
 using System;
-using ei_core.Entities.AccessControl;
+using ei_core.Entities.UserAccountAggregate;
 using Xunit;
 
 namespace ei_unit_tests.core.Entities.AccessControl
@@ -16,7 +16,7 @@ namespace ei_unit_tests.core.Entities.AccessControl
         {
             const bool expected = true;
             const string passwordToCompare = "p4ssw0rd";
-            var userAccount = new UserAccountAggregate(TestId, _testCreationDate, TestUsername, TestPassword);
+            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
             var actual = userAccount.PasswordMatches(passwordToCompare);
             Assert.Equal(expected, actual);
         }
@@ -25,9 +25,9 @@ namespace ei_unit_tests.core.Entities.AccessControl
         public void PasswordsDoNotMatchDifferentStrings()
         {
             const bool expected = false;
-            const string passwordToValidate = "dummyPass";
-            var userAccount = new UserAccountAggregate(TestId, _testCreationDate, TestUsername, TestPassword);
-            var actual = userAccount.PasswordMatches(passwordToValidate);
+            const string passwordToCompare = "dummyPass";
+            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
+            var actual = userAccount.PasswordMatches(passwordToCompare);
             Assert.Equal(expected, actual);
         }
 
@@ -35,35 +35,35 @@ namespace ei_unit_tests.core.Entities.AccessControl
         public void PasswordsDoNotMatchDifferentCase()
         {
             const bool expected = false;
-            const string passwordToValidate = "P4ssw0rd";
-            var userAccount = new UserAccountAggregate(TestId, _testCreationDate, TestUsername, TestPassword);
-            var actual = userAccount.PasswordMatches(passwordToValidate);
+            const string passwordToCompare = "P4ssw0rd";
+            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
+            var actual = userAccount.PasswordMatches(passwordToCompare);
             Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void PasswordsDoNotMatchNullString()
         {
-            const string passwordToValidate = null;
-            var userAccount = new UserAccountAggregate(TestId, _testCreationDate, TestUsername, TestPassword);
-            Assert.Throws<ArgumentNullException>(() => userAccount.PasswordMatches(passwordToValidate));
+            const string passwordToCompare = null;
+            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
+            Assert.Throws<ArgumentNullException>(() => userAccount.PasswordMatches(passwordToCompare));
         }
 
         [Fact]
         public void PasswordsDoNotMatchEmptyString()
         {
-            const string passwordToValidate = "";
-            var userAccount = new UserAccountAggregate(TestId, _testCreationDate, TestUsername, TestPassword);
-            Assert.Throws<ArgumentException>(() => userAccount.PasswordMatches(passwordToValidate));
+            const string passwordToCompare = "";
+            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
+            Assert.Throws<ArgumentException>(() => userAccount.PasswordMatches(passwordToCompare));
         }
 
         [Fact]
         public void PasswordsDoNotMatchLeadingAndTrailingSpaces()
         {
             const bool expected = false;
-            const string passwordToValidate = " p4ssw0rd ";
-            var userAccount = new UserAccountAggregate(TestId, _testCreationDate, TestUsername, TestPassword);
-            var actual = userAccount.PasswordMatches(passwordToValidate);
+            const string passwordToCompare = " p4ssw0rd ";
+            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
+            var actual = userAccount.PasswordMatches(passwordToCompare);
             Assert.Equal(expected, actual);
         }
     }
