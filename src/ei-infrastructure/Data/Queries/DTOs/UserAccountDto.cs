@@ -2,7 +2,7 @@
 
 namespace ei_infrastructure.Data.Queries.DTOs
 {
-    public class UserAccount : ei_core.Interfaces.IUserAccountDto
+    public class UserAccountDto
     {
         public int Id { get; set; }
         public DateTime CreationDate { get; set; }

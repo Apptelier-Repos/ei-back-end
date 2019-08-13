@@ -21,4 +21,8 @@
     <ProjectReference Include="..\..\src\ei-core\ei-core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Builders\" />
+  </ItemGroup>
+
 </Project>
