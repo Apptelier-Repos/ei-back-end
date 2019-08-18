@@ -3,7 +3,7 @@ using Xunit;
 
 namespace ei_integration_tests.Features.UserAccount
 {
-    public class UserAccountQueryShould
+    public class UserAccountQueryShould : IntegrationTestBase
     {
         [Fact]
         public void ReturnAUserAccountBasedOnAUsername()
