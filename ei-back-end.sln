@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ei-unit-tests", "tests\ei-u
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ei-integration-tests", "tests\ei-integration-tests\ei-integration-tests.csproj", "{A32178CE-D890-4A4C-9B27-31ABF77F5A46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ei-modules", "ei-modules\ei-modules.csproj", "{B4A08612-EB19-4480-B2FF-8595CE80806D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ei-modules", "src\ei-modules\ei-modules.csproj", "{B4A08612-EB19-4480-B2FF-8595CE80806D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -27,13 +27,13 @@ namespace ei_infrastructure.Data.Queries
 
     public class UserAccountQueryHandler : IRequestHandler<UserAccountQuery, UserAccount>
     {
-        private readonly IDbConnection _connection;
+        private readonly IDbConnection _dbConnection;
         private readonly IMapper _mapper;
         private readonly SqlServerCompiler _compiler;
 
-        public UserAccountQueryHandler(IDbConnection connection, IMapper mapper)
+        public UserAccountQueryHandler(IDbConnection dbConnection, IMapper mapper)
         {
-            _connection = connection;
+            _dbConnection = dbConnection;
             _mapper = mapper;
             _compiler = new SqlServerCompiler();
         }
@@ -45,8 +45,12 @@ namespace ei_infrastructure.Data.Queries
             var sqlResult = _compiler.Compile(query);
             try
             {
-                var userAccountDto = await _connection.QuerySingleAsync<UserAccountDto>(sqlResult.Sql, new { p0 = sqlResult.Bindings[0] });
-                var userAccount = _mapper.Map<UserAccount>(userAccountDto);
+                UserAccount userAccount;
+                using (_dbConnection)
+                {
+                    var userAccountDto = await _dbConnection.QuerySingleAsync<UserAccountDto>(sqlResult.Sql, new { p0 = sqlResult.Bindings[0] });
+                    userAccount = _mapper.Map<UserAccount>(userAccountDto);
+                }
 
                 return userAccount;
             }

@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ei-core\ei-core.csproj" />
-    <ProjectReference Include="..\src\ei-infrastructure\ei-infrastructure.csproj" />
+    <ProjectReference Include="..\ei-core\ei-core.csproj" />
+    <ProjectReference Include="..\ei-infrastructure\ei-infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
