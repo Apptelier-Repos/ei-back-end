@@ -46,15 +46,15 @@ namespace ei_infrastructure.Data.Queries
             try
             {
                 UserAccount userAccount;
-                using (_dbConnection)
-                {
-                    var userAccountDto = await _dbConnection.QuerySingleAsync<UserAccountDto>(sqlResult.Sql, new { p0 = sqlResult.Bindings[0] });
-                    userAccount = _mapper.Map<UserAccount>(userAccountDto);
-                }
+                var userAccountDto =
+                    await _dbConnection.QuerySingleAsync<UserAccountDto>(sqlResult.Sql,
+                        new { p0 = sqlResult.Bindings[0] });
+                userAccount = _mapper.Map<UserAccount>(userAccountDto);
 
                 return userAccount;
             }
-            catch (InvalidOperationException e) when (e.Message.IndexOf("no elements", StringComparison.OrdinalIgnoreCase) >= 0)
+            catch (InvalidOperationException e) when (e.Message.IndexOf("no elements",
+                                                          StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 return null;
             }

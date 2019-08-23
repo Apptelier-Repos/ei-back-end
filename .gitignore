@@ -233,5 +233,3 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-*.jfm
-src/ei-database/ei-database.jfm

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Dapper;
 using ei_web_api;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Respawn;
@@ -41,14 +42,17 @@ namespace ei_integration_tests
             {
                 try
                 {
+                    T result;
                     using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        var result = await func(serviceScope.ServiceProvider).ConfigureAwait(false);
+                        using (var db = serviceScope.ServiceProvider.GetService<IDbConnection>())
+                        {
+                            result = await func(serviceScope.ServiceProvider).ConfigureAwait(false);
+                        }
                         transactionScope.Complete();
-
-                        return result;
                     }
 
+                    return result;
                 }
                 catch (Exception e)
                 {
@@ -56,7 +60,7 @@ namespace ei_integration_tests
                     // Complete is not  called, therefore the transaction is automatically rolled back.
 
                     // TODO: Log error here.
-                    // TODO: Remove re-throw below.
+                    // TODO: Replace re-throw below with a proper exception handling strategy.
                     throw;
                 }
             }
@@ -69,11 +73,19 @@ namespace ei_integration_tests
         {
             return ExecuteDbContextAsync(db =>
             {
-                using (db)
-                {
-                    var sql = "INSERT INTO UserAccount(Username, Password) VALUES (@Username, @Password)";
-                    return db.ExecuteAsync(sql, new {Username = "ixra", Password = "pass"});
-                }
+                // TODO: Replace this hard-coded insert with a TEntity-based generator. Allow for insertion of multiple records.
+                var sql = "INSERT INTO UserAccount(Username, Password) VALUES (@Username, @Password)";
+                return db.ExecuteAsync(sql, new {Username = "ixra", Password = "pass"});
+            });
+        }
+
+        public static Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
+        {
+            return ExecuteScopeAsync(sp =>
+            {
+                var mediator = sp.GetService<IMediator>();
+
+                return mediator.Send(request);
             });
         }
     }
