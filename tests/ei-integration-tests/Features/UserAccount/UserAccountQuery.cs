@@ -7,10 +7,10 @@ using static ei_integration_tests.SliceFixture;
 
 namespace ei_integration_tests.Features.UserAccount
 {
-    public class UserAccountQueryShould : IntegrationTestBase
+    public class UserAccountQuery : IntegrationTestBase
     {
         [Fact]
-        public async void ReturnAUserAccountBasedOnAUsername()
+        public async void ReturnsAUserAccountBasedOnAUsername()
         {
             const string testedUsername = "limon";
             var userAccount1 = new ei_infrastructure.Data.POCOs.UserAccount
@@ -23,7 +23,7 @@ namespace ei_integration_tests.Features.UserAccount
                 {userAccount1, userAccount2, userAccount3};
             await InsertAsync(userAccounts);
 
-            var query = new UserAccountQuery { Username = testedUsername };
+            var query = new ei_infrastructure.Data.Queries.UserAccountQuery { Username = testedUsername };
             var result = await SendAsync(query);
 
             result.ShouldNotBeNull();
@@ -32,14 +32,14 @@ namespace ei_integration_tests.Features.UserAccount
         }
 
         [Fact]
-        public async void ReturnNullWhenAUserAccountCouldNotBeFoundByUsername()
+        public async void ReturnsNullWhenAUserAccountCouldNotBeFoundByUsername()
         {
             const string testedUsername = "joseph";
             var userAccount = new ei_infrastructure.Data.POCOs.UserAccount
                 { Username = "lesair", Password = "123@321" };
             await InsertAsync(userAccount);
 
-            var query = new UserAccountQuery { Username = testedUsername };
+            var query = new ei_infrastructure.Data.Queries.UserAccountQuery { Username = testedUsername };
             var result = await SendAsync(query);
 
             result.ShouldBeNull();
