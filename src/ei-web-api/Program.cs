@@ -15,6 +15,9 @@ namespace ei_web_api
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
+
+            // TODO: Research if a using (var scope = host.Services.CreateScope()) is missing or not.
+            // TODO: Seed database if needed.
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

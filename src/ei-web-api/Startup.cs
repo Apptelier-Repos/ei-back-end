@@ -4,10 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Autofac;
 using AutoMapper;
-using ei_infrastructure.Data.Queries;
-using ei_modules;
+using ei_core.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,8 +20,6 @@ namespace ei_web_api
 {
     public class Startup
     {
-        private static
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,21 +32,16 @@ namespace ei_web_api
         {
             services.AddTransient<IDbConnection, SqlConnection>(sp => new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddAutoMapper(typeof(Startup));
-
-            var builder = new ContainerBuilder();
-            var assembly = typeof(HandlerModule).Assembly;
-            builder.RegisterAssemblyModules(assembly);
-
-
-            services.AddMediatR(typeof(UserAccountQueryHandler));
-            // TODO: Add MediatR transaction and logging behavior pipelines below:
-            //services.AddScoped(
-            //    typeof(IPipelineBehavior<,>),
-            //    typeof(TransactionBehavior<,>));
-            //services.AddScoped(
-            //    typeof(IPipelineBehavior<,>),
-            //    typeof(LoggingBehavior<,>));
+            services.AddAutoMapper(typeof(ei_infrastructure.Data.Queries.MappingProfile));
+            services.AddMediatR(typeof(ei_infrastructure.Data.Queries.UserAccountQueryHandler));
+            services.AddScoped(
+                typeof(IPipelineBehavior<,>),
+                typeof(ei_infrastructure.Data.TransactionBehavior<,>));
+            services.AddScoped(
+                typeof(IPipelineBehavior<,>),
+                typeof(ei_infrastructure.Logging.LoggingBehavior<,>));
+            services.AddScoped(typeof(IAppLogger<>), typeof(ei_infrastructure.Logging.LoggerAdapter<>));
+            services.AddScoped(typeof(ILoggerFactory), typeof(LoggerFactory)); // TODO: Research why this project needs to register the logger factory. eShopOnWeb doesn't. 
 
             // TODO: Add CORS rule to allow all.
 

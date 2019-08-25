@@ -1,11 +1,8 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dapper;
-using ei_core.Entities.UserAccountAggregate;
-using ei_infrastructure.Data.Queries.DTOs;
 using MediatR;
 using SqlKata;
 using SqlKata.Compilers;
@@ -16,16 +13,16 @@ namespace ei_infrastructure.Data.Queries
     {
         public MappingProfile()
         {
-            CreateMap<UserAccountDto, UserAccount>();
+            CreateMap<POCOs.UserAccount, ei_core.Entities.UserAccountAggregate.UserAccount>();
         }
     }
 
-    public class UserAccountQuery : IRequest<UserAccount>
+    public class UserAccountQuery : IRequest<ei_core.Entities.UserAccountAggregate.UserAccount>
     {
         public string Username { get; set; }
     }
 
-    public class UserAccountQueryHandler : IRequestHandler<UserAccountQuery, UserAccount>
+    public class UserAccountQueryHandler : IRequestHandler<UserAccountQuery, ei_core.Entities.UserAccountAggregate.UserAccount>
     {
         private readonly IDbConnection _dbConnection;
         private readonly IMapper _mapper;
@@ -38,26 +35,16 @@ namespace ei_infrastructure.Data.Queries
             _compiler = new SqlServerCompiler();
         }
 
-        public async Task<UserAccount> Handle(UserAccountQuery request, CancellationToken cancellationToken)
+        public async Task<ei_core.Entities.UserAccountAggregate.UserAccount> Handle(UserAccountQuery request, CancellationToken cancellationToken)
         {
-            var query = new Query("UserAccountDto")
+            var query = new Query("UserAccount")
                 .Where("Username", request.Username);
             var sqlResult = _compiler.Compile(query);
-            try
-            {
-                UserAccount userAccount;
-                var userAccountDto =
-                    await _dbConnection.QuerySingleAsync<UserAccountDto>(sqlResult.Sql,
-                        new { p0 = sqlResult.Bindings[0] });
-                userAccount = _mapper.Map<UserAccount>(userAccountDto);
 
-                return userAccount;
-            }
-            catch (InvalidOperationException e) when (e.Message.IndexOf("no elements",
-                                                          StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return null;
-            }
+            var userAccountDto =
+                await _dbConnection.QuerySingleOrDefaultAsync<ei_core.Entities.UserAccountAggregate.UserAccount>(sqlResult.Sql,
+                    new {p0 = sqlResult.Bindings[0]});
+            return _mapper.Map<ei_core.Entities.UserAccountAggregate.UserAccount>(userAccountDto);
         }
     }
 }

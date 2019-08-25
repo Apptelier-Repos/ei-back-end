@@ -1,7 +1,9 @@
-using System;
+using System.Collections.Generic;
 using ei_infrastructure.Data.Queries;
+using Shouldly;
 using Xunit;
 using static ei_integration_tests.SliceFixture;
+// ReSharper disable StringLiteralTypo
 
 namespace ei_integration_tests.Features.UserAccount
 {
@@ -10,19 +12,37 @@ namespace ei_integration_tests.Features.UserAccount
         [Fact]
         public async void ReturnAUserAccountBasedOnAUsername()
         {
-            // TODO: Temporarily using username const below. Remove it after this is gathered from the persistence media.
-            // ReSharper disable once StringLiteralTypo
-            const string username = "lesair";
-            const string password = "123@321";
-            // TODO: Change DDD entity below for a DTO for direct DB insertion purposes. Consider sharing these DTOs since we're not using EF.
-            var userAccount1 = new ei_core.Entities.UserAccountAggregate.UserAccount(999, DateTime.Today, username, password);
-            await InsertAsync(userAccount1);
+            const string testedUsername = "limon";
+            var userAccount1 = new ei_infrastructure.Data.POCOs.UserAccount
+                { Username = "loerardo", Password = "123@321"};
+            var userAccount2 = new ei_infrastructure.Data.POCOs.UserAccount
+                { Username = testedUsername, Password = "p4ssw0rd" };
+            var userAccount3 = new ei_infrastructure.Data.POCOs.UserAccount
+                { Username = "mota", Password = "_+&(=@|!" };
+            var userAccounts = new List<ei_infrastructure.Data.POCOs.UserAccount>
+                {userAccount1, userAccount2, userAccount3};
+            await InsertAsync(userAccounts);
 
-            var demoQuery = new DemoQuery { Number = 5 };
-            var demoResult = await SendAsync(demoQuery);
-
-            var query = new UserAccountQuery { Username = username };
+            var query = new UserAccountQuery { Username = testedUsername };
             var result = await SendAsync(query);
+
+            result.ShouldNotBeNull();
+            result.Username.ShouldBe(testedUsername);
+            result.Id.ShouldBeGreaterThan(0);
+        }
+
+        [Fact]
+        public async void ReturnNullWhenAUserAccountCouldNotBeFoundByUsername()
+        {
+            const string testedUsername = "joseph";
+            var userAccount = new ei_infrastructure.Data.POCOs.UserAccount
+                { Username = "lesair", Password = "123@321" };
+            await InsertAsync(userAccount);
+
+            var query = new UserAccountQuery { Username = testedUsername };
+            var result = await SendAsync(query);
+
+            result.ShouldBeNull();
         }
     }
 }

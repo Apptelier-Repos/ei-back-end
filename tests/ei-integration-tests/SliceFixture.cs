@@ -3,7 +3,7 @@ using System.Data;
 using System.IO;
 using System.Threading.Tasks;
 using System.Transactions;
-using Dapper;
+using Dapper.Contrib.Extensions;
 using ei_web_api;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +32,7 @@ namespace ei_integration_tests
             var provider = services.BuildServiceProvider();
             ScopeFactory = provider.GetService<IServiceScopeFactory>();
             Checkpoint = new Checkpoint();
+            SqlMapperExtensions.TableNameMapper = type => type.Name; // https://dapper-tutorial.net/knowledge-base/32204808/dapper-use-singular-table-name
         }
 
         public static Task ResetCheckpoint() => Checkpoint.Reset(Configuration.GetConnectionString("DefaultConnection"));
@@ -54,7 +55,7 @@ namespace ei_integration_tests
 
                     return result;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     // The TransactionScope.Complete method commits the transaction. If an exception has been thrown,
                     // Complete is not  called, therefore the transaction is automatically rolled back.
@@ -71,12 +72,7 @@ namespace ei_integration_tests
         
         public static Task InsertAsync<TEntity>(TEntity entity) where TEntity : class
         {
-            return ExecuteDbContextAsync(db =>
-            {
-                // TODO: Replace this hard-coded insert with a TEntity-based generator. Allow for insertion of multiple records.
-                var sql = "INSERT INTO UserAccount(Username, Password) VALUES (@Username, @Password)";
-                return db.ExecuteAsync(sql, new {Username = "ixra", Password = "pass"});
-            });
+            return ExecuteDbContextAsync(db => db.InsertAsync(entity));
         }
 
         public static Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)

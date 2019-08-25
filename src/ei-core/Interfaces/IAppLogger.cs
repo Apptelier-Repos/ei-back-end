@@ -7,7 +7,7 @@
     /// <typeparam name="T"></typeparam>
     public interface IAppLogger<T>
     {
-        void LogInformation(string message, params object[] args);
-        void LogWarning(string message, params object[] args);
+        void LogInformation(T state, string message, params object[] args);
+        void LogWarning(T state, string message, params object[] args);
     }
 }
