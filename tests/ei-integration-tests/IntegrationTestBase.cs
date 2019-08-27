@@ -4,7 +4,7 @@ using Xunit;
 
 namespace ei_integration_tests
 {
-    public class IntegrationTestBase : IAsyncLifetime
+    public abstract class IntegrationTestBase : IAsyncLifetime
     {
         private static readonly AsyncLock Mutex = new AsyncLock();
 
