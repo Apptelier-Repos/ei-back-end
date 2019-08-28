@@ -1,8 +1,9 @@
 using System;
 using ei_core.Entities.UserAccountAggregate;
+using Shouldly;
 using Xunit;
 
-namespace ei_unit_tests.core.Entities.UserAccountTests
+namespace ei_unit_tests.Core.Entities.UserAccountTests
 {
     public class UserAccountPasswordMatches
     {
@@ -12,41 +13,19 @@ namespace ei_unit_tests.core.Entities.UserAccountTests
         private const string TestPassword = "p4ssw0rd";
 
         [Fact]
-        public void PasswordsMatch()
+        public void PasswordsDoNotMatchDifferentCase()
         {
-            const bool expected = true;
-            const string passwordToCompare = "p4ssw0rd";
+            const string passwordToCompare = "P4ssw0rd";
             var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
-            var actual = userAccount.PasswordMatches(passwordToCompare);
-            Assert.Equal(expected, actual);
+            userAccount.PasswordMatches(passwordToCompare).ShouldBeFalse();
         }
 
         [Fact]
         public void PasswordsDoNotMatchDifferentStrings()
         {
-            const bool expected = false;
             const string passwordToCompare = "dummyPass";
             var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
-            var actual = userAccount.PasswordMatches(passwordToCompare);
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void PasswordsDoNotMatchDifferentCase()
-        {
-            const bool expected = false;
-            const string passwordToCompare = "P4ssw0rd";
-            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
-            var actual = userAccount.PasswordMatches(passwordToCompare);
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void PasswordsDoNotMatchNullString()
-        {
-            const string passwordToCompare = null;
-            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
-            Assert.Throws<ArgumentNullException>(() => userAccount.PasswordMatches(passwordToCompare));
+            userAccount.PasswordMatches(passwordToCompare).ShouldBeFalse();
         }
 
         [Fact]
@@ -60,11 +39,25 @@ namespace ei_unit_tests.core.Entities.UserAccountTests
         [Fact]
         public void PasswordsDoNotMatchLeadingAndTrailingSpaces()
         {
-            const bool expected = false;
             const string passwordToCompare = " p4ssw0rd ";
             var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
-            var actual = userAccount.PasswordMatches(passwordToCompare);
-            Assert.Equal(expected, actual);
+            userAccount.PasswordMatches(passwordToCompare).ShouldBeFalse();
+        }
+
+        [Fact]
+        public void PasswordsDoNotMatchNullString()
+        {
+            const string passwordToCompare = null;
+            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
+            Assert.Throws<ArgumentNullException>(() => userAccount.PasswordMatches(passwordToCompare));
+        }
+
+        [Fact]
+        public void PasswordsMatch()
+        {
+            const string passwordToCompare = "p4ssw0rd";
+            var userAccount = new UserAccount(TestId, _testCreationDate, TestUsername, TestPassword);
+            userAccount.PasswordMatches(passwordToCompare).ShouldBeTrue();
         }
     }
 }

@@ -20,8 +20,4 @@
     <ProjectReference Include="..\ei-core\ei-core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Commands\" />
-  </ItemGroup>
-
 </Project>

@@ -75,6 +75,11 @@ namespace ei_integration_tests
             return ExecuteDbContextAsync(db => db.InsertAsync(entity));
         }
 
+        public static Task<T> FindAsync<T>(int id) where T : class
+        {
+            return ExecuteDbContextAsync(db => db.GetAsync<T>(id));
+        }
+
         public static Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
         {
             return ExecuteScopeAsync(sp =>
