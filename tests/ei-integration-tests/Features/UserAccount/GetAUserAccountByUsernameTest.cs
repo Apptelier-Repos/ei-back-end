@@ -8,7 +8,7 @@ using static ei_integration_tests.SliceFixture;
 
 namespace ei_integration_tests.Features.UserAccount
 {
-    public class TestGetAUserAccountByUsername : IntegrationTestBase
+    public class GetAUserAccountByUsernameTest : IntegrationTestBase
     {
         [Fact]
         public async void ReturnsAUserAccountWhenThereIsAMatch()

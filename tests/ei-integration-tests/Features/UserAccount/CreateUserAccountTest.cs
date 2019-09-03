@@ -10,7 +10,7 @@ using static ei_integration_tests.SliceFixture;
 
 namespace ei_integration_tests.Features.UserAccount
 {
-    public class TestCreateUserAccount : IntegrationTestBase
+    public class CreateUserAccountTest : IntegrationTestBase
     {
         [Fact]
         public async void CreatesANewUserAccount()

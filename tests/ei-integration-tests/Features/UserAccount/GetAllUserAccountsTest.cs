@@ -9,7 +9,7 @@ using static ei_infrastructure.Utils.StringUtils;
 
 namespace ei_integration_tests.Features.UserAccount
 {
-    public class TestGetAllUserAccounts : IntegrationTestBase
+    public class GetAllUserAccountsTest : IntegrationTestBase
     {
         private void UserAccountOptionsBuilder(IFakeOptions<ei_infrastructure.Data.POCOs.UserAccount> fakeOptions)
         {
