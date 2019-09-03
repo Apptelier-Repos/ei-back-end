@@ -22,7 +22,7 @@ namespace ei_integration_tests.Features.UserAccount
             };
             await InsertAsync(userAccounts);
 
-            var query = new GetAUserAccountByUsername {Username = matchedUsername};
+            var query = new GetAUserAccountByUsername.Query {Username = matchedUsername};
             var result = await SendAsync(query);
 
             result.ShouldNotBeNull();
@@ -38,7 +38,7 @@ namespace ei_integration_tests.Features.UserAccount
                 {Username = "lesair", Password = "123@321"};
             await InsertAsync(userAccount);
 
-            var query = new GetAUserAccountByUsername {Username = unmatchedUsername};
+            var query = new GetAUserAccountByUsername.Query {Username = unmatchedUsername};
             var result = await SendAsync(query);
 
             result.ShouldBeNull();

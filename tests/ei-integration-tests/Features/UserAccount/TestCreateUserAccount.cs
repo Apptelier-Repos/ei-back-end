@@ -18,7 +18,7 @@ namespace ei_integration_tests.Features.UserAccount
             const string username = "maddox";
             const string password = "p4$$word";
 
-            var command = new CreateUserAccount {Username = username, Password = password};
+            var command = new CreateUserAccount.Command {Username = username, Password = password};
             var userAccountId = await SendAsync(command);
 
             var userAccount = await FindAsync<ei_infrastructure.Data.POCOs.UserAccount>(userAccountId);
@@ -36,9 +36,9 @@ namespace ei_integration_tests.Features.UserAccount
             const string password1 = "P4ss!#$%";
             const string password2 = "@passw0rd";
 
-            var command1 = new CreateUserAccount {Username = username, Password = password1};
+            var command1 = new CreateUserAccount.Command {Username = username, Password = password1};
             await SendAsync(command1);
-            var command2 = new CreateUserAccount {Username = username, Password = password2};
+            var command2 = new CreateUserAccount.Command {Username = username, Password = password2};
             Exception ex = await Assert.ThrowsAsync<SqlException>(() => SendAsync(command2));
             ex.Message.ShouldContain("duplicate");
         }
@@ -49,9 +49,9 @@ namespace ei_integration_tests.Features.UserAccount
             var username = "artaud";
             const string password = null;
 
-            var command = new CreateUserAccount {Username = username, Password = password};
+            var command = new CreateUserAccount.Command {Username = username, Password = password};
             Exception ex = await Assert.ThrowsAsync<ArgumentNullException>(() => SendAsync(command));
-            ex.Message.ShouldContain(nameof(CreateUserAccount.Password));
+            ex.Message.ShouldContain(nameof(CreateUserAccount.Command.Password));
         }
 
         [Fact]
@@ -60,9 +60,9 @@ namespace ei_integration_tests.Features.UserAccount
             var username = string.Empty;
             const string password = "P4ss!#$%";
 
-            var command = new CreateUserAccount {Username = username, Password = password};
+            var command = new CreateUserAccount.Command {Username = username, Password = password};
             Exception ex = await Assert.ThrowsAsync<ArgumentException>(() => SendAsync(command));
-            ex.Message.ShouldContain(nameof(CreateUserAccount.Username));
+            ex.Message.ShouldContain(nameof(CreateUserAccount.Command.Username));
         }
     }
 }

@@ -32,8 +32,8 @@ namespace ei_web_api
         {
             services.AddTransient<IDbConnection, SqlConnection>(sp => new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddAutoMapper(typeof(ei_infrastructure.Data.Queries.MappingProfile));
-            services.AddMediatR(typeof(ei_infrastructure.Data.Queries.GetAUserAccountByUsernameHandler));
+            services.AddAutoMapper(typeof(ei_infrastructure.Data.Queries.GetAUserAccountByUsername));
+            services.AddMediatR(typeof(ei_infrastructure.Data.Queries.GetAUserAccountByUsername));
             services.AddScoped(
                 typeof(IPipelineBehavior<,>),
                 typeof(ei_infrastructure.Data.TransactionBehavior<,>));

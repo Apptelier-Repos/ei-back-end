@@ -29,7 +29,7 @@ namespace ei_integration_tests.Features.UserAccount
                     UserAccountOptionsBuilder);
             await InsertAsync(fakeAccounts);
 
-            var query = new GetAllUserAccounts();
+            var query = new GetAllUserAccounts.Query();
             var result = (await SendAsync(query)).ToList();
 
             result.ShouldNotBeNull();

@@ -9,38 +9,44 @@ using MediatR;
 
 namespace ei_infrastructure.Data.Commands
 {
-    public class MappingProfile : Profile
+    public class CreateUserAccount
     {
-        public MappingProfile()
+        public class MappingProfile : Profile
         {
-            CreateMap<CreateUserAccount, UserAccount>();
-        }
-    }
-
-    public class CreateUserAccount : IRequest<int>
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class CreateUserAccountHandler : IRequestHandler<CreateUserAccount, int>
-    {
-        private readonly IDbConnection _dbConnection;
-        private readonly IMapper _mapper;
-
-        public CreateUserAccountHandler(IDbConnection dbConnection, IMapper mapper)
-        {
-            _dbConnection = dbConnection;
-            _mapper = mapper;
+            public MappingProfile()
+            {
+                CreateMap<Command, UserAccount>();
+            }
         }
 
-        public async Task<int> Handle(CreateUserAccount request, CancellationToken cancellationToken)
+        /// <summary>
+        ///     Command for creating a new user account.
+        /// </summary>
+        public class Command : IRequest<int>
         {
-            Guard.Against.NullOrWhiteSpace(request.Username, nameof(request.Username));
-            Guard.Against.NullOrWhiteSpace(request.Password, nameof(request.Password));
+            public string Username { get; set; }
+            public string Password { get; set; }
+        }
 
-            var userAccount = _mapper.Map<UserAccount>(request);
-            return await _dbConnection.InsertAsync(userAccount);
+        public class CommandHandler : IRequestHandler<Command, int>
+        {
+            private readonly IDbConnection _dbConnection;
+            private readonly IMapper _mapper;
+
+            public CommandHandler(IDbConnection dbConnection, IMapper mapper)
+            {
+                _dbConnection = dbConnection;
+                _mapper = mapper;
+            }
+
+            public async Task<int> Handle(Command request, CancellationToken cancellationToken)
+            {
+                Guard.Against.NullOrWhiteSpace(request.Username, nameof(request.Username));
+                Guard.Against.NullOrWhiteSpace(request.Password, nameof(request.Password));
+
+                var userAccount = _mapper.Map<UserAccount>(request);
+                return await _dbConnection.InsertAsync(userAccount);
+            }
         }
     }
 }
