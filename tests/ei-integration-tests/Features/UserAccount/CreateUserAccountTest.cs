@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using ei_core.Exceptions;
 using ei_infrastructure.Data.Commands;
 using Shouldly;
 using Xunit;
@@ -39,8 +39,8 @@ namespace ei_integration_tests.Features.UserAccount
             var command1 = new CreateUserAccount.Command {Username = username, Password = password1};
             await SendAsync(command1);
             var command2 = new CreateUserAccount.Command {Username = username, Password = password2};
-            Exception ex = await Assert.ThrowsAsync<SqlException>(() => SendAsync(command2));
-            ex.Message.ShouldContain("duplicate");
+            Exception ex = await Assert.ThrowsAsync<UsernameAlreadyExistsException>(() => SendAsync(command2));
+            ex.Message.ShouldContain(username);
         }
 
         [Fact]

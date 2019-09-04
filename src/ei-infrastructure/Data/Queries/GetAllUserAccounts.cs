@@ -4,10 +4,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Dapper;
+using Dapper.Contrib.Extensions;
 using ei_core.Entities.UserAccountAggregate;
 using MediatR;
-using SqlKata.Compilers;
 
 namespace ei_infrastructure.Data.Queries
 {
@@ -23,7 +22,6 @@ namespace ei_infrastructure.Data.Queries
         public class GetAllUserAccountsHandler : IRequestHandler<Query,
             IEnumerable<UserAccount>>
         {
-            private readonly SqlServerCompiler _compiler;
             private readonly IDbConnection _dbConnection;
             private readonly IMapper _mapper;
 
@@ -31,16 +29,12 @@ namespace ei_infrastructure.Data.Queries
             {
                 _dbConnection = dbConnection;
                 _mapper = mapper;
-                _compiler = new SqlServerCompiler();
             }
 
             public async Task<IEnumerable<UserAccount>> Handle(Query request,
                 CancellationToken cancellationToken)
             {
-                var query = new SqlKata.Query("UserAccount");
-                var sqlResult = _compiler.Compile(query);
-
-                var userAccountPocos = (await _dbConnection.QueryAsync<POCOs.UserAccount>(sqlResult.Sql)).ToList();
+                var userAccountPocos = (await _dbConnection.GetAllAsync<POCOs.UserAccount>()).ToList();
                 return _mapper.Map<IEnumerable<UserAccount>>(userAccountPocos);
             }
         }

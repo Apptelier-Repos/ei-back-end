@@ -16,7 +16,7 @@ namespace ei_integration_tests.Features.UserAccount
             const string matchedUsername = "limon";
             var userAccounts = new List<ei_infrastructure.Data.POCOs.UserAccount>
             {
-                new ei_infrastructure.Data.POCOs.UserAccount {Username = "loerardo", Password = "123@321"},
+                new ei_infrastructure.Data.POCOs.UserAccount {Username = "rios", Password = "loerardo@321"},
                 new ei_infrastructure.Data.POCOs.UserAccount {Username = matchedUsername, Password = "p4ssw0rd"},
                 new ei_infrastructure.Data.POCOs.UserAccount {Username = "mota", Password = "_+&(=@|!"}
             };

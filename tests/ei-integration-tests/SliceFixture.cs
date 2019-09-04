@@ -32,7 +32,7 @@ namespace ei_integration_tests
             var provider = services.BuildServiceProvider();
             ScopeFactory = provider.GetService<IServiceScopeFactory>();
             Checkpoint = new Checkpoint();
-            SqlMapperExtensions.TableNameMapper = type => type.Name; // https://dapper-tutorial.net/knowledge-base/32204808/dapper-use-singular-table-name
+            ei_infrastructure.Data.DbInitializer.InitializeSettings();
         }
 
         public static Task ResetCheckpoint() => Checkpoint.Reset(Configuration.GetConnectionString("DefaultConnection"));

@@ -1,9 +1,12 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using Dapper.Contrib.Extensions;
+using ei_core.Exceptions;
 using ei_infrastructure.Data.POCOs;
 using MediatR;
 
@@ -45,7 +48,14 @@ namespace ei_infrastructure.Data.Commands
                 Guard.Against.NullOrWhiteSpace(request.Password, nameof(request.Password));
 
                 var userAccount = _mapper.Map<UserAccount>(request);
-                return await _dbConnection.InsertAsync(userAccount);
+                try
+                {
+                    return await _dbConnection.InsertAsync(userAccount);
+                }
+                catch (SqlException e) when (e.Message.IndexOf("duplicate", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    throw new UsernameAlreadyExistsException(request.Username, e);
+                }
             }
         }
     }
