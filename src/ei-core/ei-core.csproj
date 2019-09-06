@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>ei_core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="1.2.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Specifications\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
