@@ -59,6 +59,11 @@ namespace ei_web_api
                 app.UseHsts();
 
             app.UseHttpsRedirection();
+            app.UseCors(options => options
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseMvc();
         }
     }
