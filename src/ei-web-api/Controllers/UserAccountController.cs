@@ -33,8 +33,7 @@ namespace ei_web_api.Controllers
         [HttpGet("{username}", Name = "Get")]
         public async Task<IActionResult> Get(string username)
         {
-            var response = await _mediator.Send(new GetAUserAccountByUsername.Query
-                {Username = username});
+            var response = await _mediator.Send(new GetAUserAccountByUsername.Query(username));
             return Ok(response);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using AutoMapper;
 using Dapper;
 using ei_core.Entities.UserAccountAggregate;
@@ -25,6 +26,12 @@ namespace ei_infrastructure.Data.Queries
         public class Query : IRequest<UserAccount>
         {
             public string Username { get; set; }
+
+            public Query(string username)
+            {
+                Guard.Against.NullOrWhiteSpace(username, nameof(username));
+                Username = username;
+            }
         }
 
         public class GetAUserAccountByUsernameHandler : IRequestHandler<Query, UserAccount>
