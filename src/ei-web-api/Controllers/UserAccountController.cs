@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ei_core.Exceptions;
 using ei_infrastructure.Data.Commands;
@@ -35,6 +36,27 @@ namespace ei_web_api.Controllers
         {
             var response = await _mediator.Send(new GetAUserAccountByUsername.Query(username));
             return Ok(response);
+        }
+
+        // POST: api/UserAccount/authenticate
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] DTOs.UserCredentials userCredentials)
+        {
+            // TODO: Replace this rudimentary user authentication with feature #161 (https://dev.azure.com/Apptelier/Entrenamiento%20Imaginativo/_workitems/edit/161).
+            bool authenticationSucceeded;
+            try
+            {
+                var userAccount = await _mediator.Send(new GetAUserAccountByUsername.Query(userCredentials.Username));
+                authenticationSucceeded =
+                    userAccount?.PasswordMatches(userCredentials.Password) ?? false;
+            }
+            catch (Exception e) when (e is ArgumentException || e is ArgumentNullException)
+            {
+                return BadRequest(e.Message);
+            }
+            if (authenticationSucceeded)
+                return Ok();
+            return Unauthorized();
         }
 
         // PUT: api/UserAccount/xyz
