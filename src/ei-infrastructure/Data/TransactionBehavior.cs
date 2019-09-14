@@ -35,7 +35,7 @@ namespace ei_infrastructure.Data
                 // The TransactionScope.Complete method commits the transaction. If an exception has been thrown,
                 // Complete is not  called, therefore the transaction is automatically rolled back.
 
-                // TODO: Log error here.
+                // TODO: Add a logging entry here with feature #164 (https://dev.azure.com/Apptelier/Entrenamiento%20Imaginativo/_workitems/edit/164).
                 throw;
             }
         }

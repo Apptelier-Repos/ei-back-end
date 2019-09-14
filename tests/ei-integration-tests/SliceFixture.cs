@@ -60,7 +60,7 @@ namespace ei_integration_tests
                     // The TransactionScope.Complete method commits the transaction. If an exception has been thrown,
                     // Complete is not  called, therefore the transaction is automatically rolled back.
 
-                    // TODO: Log error here.
+                    // TODO: Add a logging entry here with feature #164 (https://dev.azure.com/Apptelier/Entrenamiento%20Imaginativo/_workitems/edit/164).
                     // TODO: Replace re-throw below with a proper exception handling strategy.
                     throw;
                 }

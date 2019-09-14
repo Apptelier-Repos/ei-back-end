@@ -1,6 +1,5 @@
 ﻿namespace ei_core.Interfaces
 {
-    // TODO: Make use of the generic type of this logger class.
     /// <summary>
     /// This type eliminates the need to depend directly on the ASP.NET Core logging types.
     /// </summary>
