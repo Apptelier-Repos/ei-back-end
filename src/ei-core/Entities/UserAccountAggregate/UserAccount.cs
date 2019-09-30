@@ -5,10 +5,6 @@ namespace ei_core.Entities.UserAccountAggregate
 {
     public sealed class UserAccount : BaseEntity
     {
-        public DateTime CreationDate { get; }
-        public string Username { get; }
-        public string Password { get; }
-
         public UserAccount(int id, DateTime creationDate, string username, string password) : base(id)
         {
             Guard.Against.NullOrWhiteSpace(username, nameof(username));
@@ -18,6 +14,10 @@ namespace ei_core.Entities.UserAccountAggregate
             Username = username;
             Password = password;
         }
+
+        public DateTime CreationDate { get; }
+        public string Username { get; }
+        public string Password { get; }
 
         public bool PasswordMatches(string passwordToCompare)
         {
