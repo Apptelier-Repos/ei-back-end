@@ -15,12 +15,14 @@ namespace ei_integration_tests.Features.WireColor
             var wireColors = new List<ei_infrastructure.Data.POCOs.WireColor>
             {
                 new ei_infrastructure.Data.POCOs.WireColor
-                    {Code = "L", Name = "Blue", TranslatedName = "Azul", BaseColor = "#0000ff"}
+                    {Code = "L", Name = "Blue", TranslatedName = "Azul", BaseColor = "#0000FF"},
+                new ei_infrastructure.Data.POCOs.WireColor
+                    {Code = "LA-L", Name = "Lavender-Blue", TranslatedName = "Lavanda-Azul", BaseColor = "#0000FF", StripeColor = "#B57EDC"}
             };
 
             await InsertAsync(wireColors);
 
-            var query = new GetAllUserAccounts.Query();
+            var query = new GetAllWireColors.Query();
             var result = (await SendAsync(query)).ToList();
 
             result.ShouldNotBeNull();
