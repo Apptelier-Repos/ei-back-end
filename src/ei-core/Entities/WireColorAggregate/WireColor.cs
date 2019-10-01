@@ -5,21 +5,8 @@ namespace ei_core.Entities.WireColorAggregate
 {
     public sealed class WireColor : BaseEntity
     {
-        public WireColor(int id, string code, string name, string translatedName, Color baseColor) : base(id)
-        {
-            Guard.Against.Zero(id, nameof(id));
-            Guard.Against.NullOrEmpty(code, nameof(code));
-            Guard.Against.NullOrEmpty(name, nameof(name));
-            Guard.Against.NullOrEmpty(translatedName, nameof(translatedName));
-
-            Code = code;
-            Name = name;
-            TranslatedName = translatedName;
-            BaseColor = baseColor;
-        }
-
         public WireColor(int id, string code, string name, string translatedName, Color baseColor,
-            Color stripeColor) : base(id)
+            Color? stripeColor = null) : base(id)
         {
             Guard.Against.Zero(id, nameof(id));
             Guard.Against.NullOrEmpty(code, nameof(code));
