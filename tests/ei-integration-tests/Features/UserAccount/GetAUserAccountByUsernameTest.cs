@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using ei_infrastructure.Data.Queries;
 using Shouldly;
 using Xunit;
@@ -14,7 +13,7 @@ namespace ei_integration_tests.Features.UserAccount
         public async void ReturnsAUserAccountWhenThereIsAMatch()
         {
             const string matchedUsername = "limon";
-            var userAccounts = new List<ei_infrastructure.Data.POCOs.UserAccount>
+            var userAccounts = new[]
             {
                 new ei_infrastructure.Data.POCOs.UserAccount {Username = "rios", Password = "loerardo@321"},
                 new ei_infrastructure.Data.POCOs.UserAccount {Username = matchedUsername, Password = "p4ssw0rd"},
