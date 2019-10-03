@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,29 +16,8 @@ namespace ei_infrastructure.Data.Queries
         {
             public MappingProfile()
             {
-                CreateMap<string, Color>().ConvertUsing(new ColorTypeConverter());
-                CreateMap<string, Color?>().ConvertUsing(new NullableColorTypeConverter());
                 CreateMap<POCOs.WireColor, WireColor>();
-                //CreateMap<POCOs.WireColor, WireColor>()
-                //    .ForMember(dest => dest.BaseColor,
-                //        opt => opt.MapFrom(src => ColorTranslator.FromHtml(src.BaseColor)))
-                //    .ForMember(dest => dest.StripeColor,
-                //        opt => opt.MapFrom(src => ColorTranslator.FromHtml(src.BaseColor)));
             }
-        }
-
-        public class NullableColorTypeConverter : ITypeConverter<string, Color?>
-        {
-            public Color? Convert(string source, Color? destination, ResolutionContext context)
-            {
-                return !string.IsNullOrEmpty(source) ? ColorTranslator.FromHtml(source) : (Color?) null;
-            }
-        }
-
-        public class ColorTypeConverter : ITypeConverter<string, Color>
-        {
-            public Color Convert(string source, Color destination, ResolutionContext context) =>
-                ColorTranslator.FromHtml(source);
         }
 
         /// <summary>
