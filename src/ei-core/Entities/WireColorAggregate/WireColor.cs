@@ -6,7 +6,7 @@ namespace ei_core.Entities.WireColorAggregate
     public sealed class WireColor : BaseEntity
     {
         public WireColor(int id, string code, string name, string translatedName, Color baseColor,
-            Color? stripeColor = null) : base(id)
+            Color? stripeColor) : base(id)
         {
             Guard.Against.Zero(id, nameof(id));
             Guard.Against.NullOrEmpty(code, nameof(code));
@@ -23,7 +23,7 @@ namespace ei_core.Entities.WireColorAggregate
         public string Code { get; }
         public string Name { get; }
         public string TranslatedName { get; }
-        public Color BaseColor { get; set; }
+        public Color BaseColor { get; }
         public Color? StripeColor { get; }
 
         public override string ToString()
