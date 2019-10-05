@@ -22,7 +22,7 @@ namespace ei_unit_tests.core.Entities.WireColorTests
         [Fact]
         public void SucceedsWithOneColor()
         {
-            var wireColor = new WireColor(Id, BlueCode, BlueName, BlueNameTranslatedName, _blueColor);
+            var wireColor = new WireColor(Id, BlueCode, BlueName, BlueNameTranslatedName, _blueColor, null);
 
             wireColor.ShouldNotBeNull();
             wireColor.Id.ShouldBe(Id);
@@ -52,7 +52,7 @@ namespace ei_unit_tests.core.Entities.WireColorTests
         public void ThrowsAnExceptionWhenCodeIsEmpty()
         {
             Exception ex = Assert.Throws<ArgumentException>(() => new WireColor(Id, string.Empty, BlueName,
-                BlueNameTranslatedName, _blueColor));
+                BlueNameTranslatedName, _blueColor, null));
             ex.Message.ShouldContain(nameof(WireColor.Code));
         }
 
@@ -60,7 +60,7 @@ namespace ei_unit_tests.core.Entities.WireColorTests
         public void ThrowsAnExceptionWhenCodeIsNull()
         {
             Exception ex = Assert.Throws<ArgumentNullException>(() => new WireColor(Id, null, BlueName,
-                BlueNameTranslatedName, _blueColor));
+                BlueNameTranslatedName, _blueColor, null));
             ex.Message.ShouldContain(nameof(WireColor.Code));
         }
 
@@ -68,7 +68,7 @@ namespace ei_unit_tests.core.Entities.WireColorTests
         public void ThrowsAnExceptionWhenNameIsEmpty()
         {
             Exception ex = Assert.Throws<ArgumentException>(() => new WireColor(Id, BlueCode, string.Empty,
-                BlueNameTranslatedName, _blueColor));
+                BlueNameTranslatedName, _blueColor, null));
             ex.Message.ShouldContain(nameof(WireColor.Name));
         }
 
@@ -76,7 +76,7 @@ namespace ei_unit_tests.core.Entities.WireColorTests
         public void ThrowsAnExceptionWhenTranslatedNameIsEmpty()
         {
             Exception ex =
-                Assert.Throws<ArgumentException>(() => new WireColor(Id, BlueCode, BlueName, string.Empty, _blueColor));
+                Assert.Throws<ArgumentException>(() => new WireColor(Id, BlueCode, BlueName, string.Empty, _blueColor, null));
             ex.Message.ShouldContain(nameof(WireColor.TranslatedName));
         }
     }
