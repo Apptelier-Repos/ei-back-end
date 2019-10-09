@@ -31,7 +31,7 @@ namespace ei_web_api.Controllers
         }
 
         // GET: api/UserAccount/mota
-        [HttpGet("{username}", Name = "Get")]
+        [HttpGet("{username}")]
         public async Task<IActionResult> Get(string username)
         {
             var response = await _mediator.Send(new GetAUserAccountByUsername.Query(username));
