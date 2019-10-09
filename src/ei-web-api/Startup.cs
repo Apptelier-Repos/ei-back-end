@@ -5,6 +5,7 @@ using ei_core.Interfaces;
 using ei_infrastructure.Data;
 using ei_infrastructure.Data.Queries;
 using ei_infrastructure.Logging;
+using ei_infrastructure.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +42,7 @@ namespace ei_web_api
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddSingleton(typeof(ILoggerFactory),
                 typeof(LoggerFactory)); // TODO: This won't be necessary when Microsoft.AspNetCore.Identity is incorporated into the Infrastructure project. To be done in feature #161 (https://dev.azure.com/Apptelier/Entrenamiento%20Imaginativo/_workitems/edit/161).
+            services.AddSingleton(typeof(IWebStandardsProvider), typeof(WebStandardsProvider));
             services.AddCors(options =>
             {
                 options.AddPolicy("allowAllOriginsHeadersAndMethods",
