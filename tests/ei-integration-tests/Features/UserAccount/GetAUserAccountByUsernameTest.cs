@@ -1,7 +1,7 @@
 using ei_infrastructure.Data.Queries;
 using Shouldly;
 using Xunit;
-using static ei_integration_tests.SliceFixture;
+using static ei_slice.Fixture;
 
 // ReSharper disable StringLiteralTypo
 
