@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ei-integration-tests", "tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ei-slice", "tests\ei-slice\ei-slice.csproj", "{99045FE1-5D5B-49BA-9083-615A85375B69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ei-functional-tests", "tests\ei-functional-tests\ei-functional-tests.csproj", "{03B8C58D-A092-418C-992B-5FA97618AF06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
