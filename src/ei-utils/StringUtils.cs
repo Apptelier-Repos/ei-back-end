@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Ardalis.GuardClauses;
 
-namespace ei_infrastructure.Utils
+namespace ei_utils
 {
-    public static class StringUtils
+    public class StringUtils
     {
         private static readonly Random Random = new Random();
 

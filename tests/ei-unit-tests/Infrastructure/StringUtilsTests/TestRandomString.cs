@@ -1,7 +1,7 @@
 ﻿using System;
 using Shouldly;
 using Xunit;
-using static ei_infrastructure.Utils.StringUtils;
+using static ei_utils.StringUtils;
 
 namespace ei_unit_tests.Infrastructure.StringUtilsTests
 {

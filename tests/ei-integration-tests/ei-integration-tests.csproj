@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\ei-core\ei-core.csproj" />
     <ProjectReference Include="..\..\src\ei-infrastructure\ei-infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\ei-utils\ei-utils.csproj" />
     <ProjectReference Include="..\ei-slice\ei-slice.csproj" />
   </ItemGroup>
 

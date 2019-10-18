@@ -5,7 +5,7 @@ using FakeItEasy.Creation;
 using Shouldly;
 using Xunit;
 using static ei_slice.Fixture;
-using static ei_infrastructure.Utils.StringUtils;
+using static ei_utils.StringUtils;
 
 namespace ei_integration_tests.Features.UserAccount
 {

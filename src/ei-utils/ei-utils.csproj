@@ -5,4 +5,8 @@
     <RootNamespace>ei_utils</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="1.2.9" />
+  </ItemGroup>
+
 </Project>
