@@ -4,6 +4,8 @@ using Shouldly;
 using Xunit;
 using static ei_slice.Fixture;
 
+// ReSharper disable StringLiteralTypo
+
 namespace ei_integration_tests.Features.WireColor
 {
     public class GetAllWireColorsTest : IntegrationTestBase
