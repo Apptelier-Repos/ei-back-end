@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ei_core.Exceptions;
 using ei_infrastructure.Data.Commands;
 using ei_infrastructure.Data.Queries;
+using ei_web_api.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +16,13 @@ namespace ei_web_api.Controllers
     [ApiController]
     public class UserAccountController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public UserAccountController(IMediator mediator)
+        public UserAccountController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         // GET: api/UserAccount
@@ -26,7 +31,7 @@ namespace ei_web_api.Controllers
         {
             var response = await _mediator.Send(new GetAllUserAccounts.Query());
             if (response.Any())
-                return Ok(response);
+                return Ok(_mapper.Map<IEnumerable<UserAccountViewModel>>(response));
             return NoContent();
         }
 
@@ -35,7 +40,7 @@ namespace ei_web_api.Controllers
         public async Task<IActionResult> Get(string username)
         {
             var response = await _mediator.Send(new GetAUserAccountByUsername.Query(username));
-            return Ok(response);
+            return Ok(_mapper.Map<UserAccountViewModel>(response));
         }
 
         // POST: api/UserAccount/authenticate

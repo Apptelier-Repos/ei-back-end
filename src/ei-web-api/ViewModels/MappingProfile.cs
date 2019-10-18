@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using AutoMapper;
+using ei_core.Entities.UserAccountAggregate;
 using ei_core.Entities.WireColorAggregate;
 using ei_core.Interfaces;
 
@@ -13,6 +14,8 @@ namespace ei_web_api.ViewModels
             CreateMap<WireColor, WireColorViewModel>()
                 .ForMember(dest => dest.BaseWebColor, opt => opt.MapFrom(src => src.BaseColor))
                 .ForMember(dest => dest.StripeWebColor, opt => opt.MapFrom(src => src.StripeColor));
+
+            CreateMap<UserAccount, UserAccountViewModel>();
         }
     }
 
