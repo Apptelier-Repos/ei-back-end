@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Shouldly;
 using Xunit;
 using static ei_slice.Fixture;
+using static ei_utils.StringUtils;
 
 // ReSharper disable StringLiteralTypo
 
@@ -22,81 +23,82 @@ namespace ei_functional_tests.Web.Controllers
         public HttpClient Client { get; }
 
         [Fact]
-        public async Task ReturnsACustomWireColor()
+        public async Task ReturnsAWireColorWithHexTripletBaseWebColorAndNoStripeWebColor()
         {
-            const string colorCode = "X1";
-            const string colorName = "Custom color 1";
-            const string colorTranslatedName = "Color personalizado 1";
-            const string baseColorHexTriplet = "#ABCDEF";
-            const string baseColorKnownName = baseColorHexTriplet;
+            const string customCode = "X1";
+            const string customName = "Custom color 1";
+            const string customTranslatedName = "Color personalizado 1";
+            const string customColorHexTriplet = "#ABCDEF";
+            const string customBaseWebColor = customColorHexTriplet;
 
             var wireColors = new[]
             {
                 new WireColor
                 {
-                    Code = colorCode, Name = colorName, TranslatedName = colorTranslatedName,
-                    BaseColor = baseColorHexTriplet
+                    Code = customCode, Name = customName, TranslatedName = customTranslatedName,
+                    BaseColor = customColorHexTriplet
                 }
             };
             await InsertAsync(wireColors);
 
 
-            var response = await Client.GetAsync($"api/wirecolor/{colorCode}");
+            var response = await Client.GetAsync($"api/wirecolor/{customCode}");
             response.EnsureSuccessStatusCode();
             var stringResponse = await response.Content.ReadAsStringAsync();
             var model = JsonConvert.DeserializeObject<WireColorViewModel>(stringResponse);
 
             model.ShouldNotBeNull();
             model.Id.ShouldBeGreaterThan(0);
-            model.Code.ShouldBe(colorCode);
-            model.Name.ShouldBe(colorName);
-            model.TranslatedName.ShouldBe(colorTranslatedName);
-            model.BaseWebColor.ShouldBe(baseColorKnownName);
+            model.Code.ShouldBe(customCode);
+            model.Name.ShouldBe(customName);
+            model.TranslatedName.ShouldBe(customTranslatedName);
+            model.BaseWebColor.ShouldBe(customBaseWebColor);
             model.StripeWebColor.ShouldBeNull();
         }
 
         [Fact]
-        public async Task ReturnsAKnownWireColor()
+        public async Task ReturnsAWireColorWithKnownBaseWebColorAndStripeWebColor()
         {
-            const string colorCode = "LA-SB";
-            const string colorName = "Lavender-Sky Blue";
-            const string colorTranslatedName = "Lavanda-Azul Cielo";
-            const string baseColorHexTriplet = "#E6E6FA";
-            const string baseColorKnownName = "Lavender";
-            const string stripeColorHexTriplet = "#87CEEB";
-            const string stripeColorKnownName = "SkyBlue";
+            const string lavenderSkyBlueCode = "LA-SB";
+            const string lavenderSkyBlueName = "Lavender-Sky Blue";
+            const string lavenderSkyBlueTranslatedName = "Lavanda-Azul Cielo";
+            const string lavenderHexTriplet = "#E6E6FA";
+            const string lavenderWebColor = "Lavender";
+            const string skyBlueHexTriplet = "#87CEEB";
+            const string skyBlueWebColor = "SkyBlue";
 
             var wireColors = new[]
             {
                 new WireColor
                 {
-                    Code = colorCode, Name = colorName, TranslatedName = colorTranslatedName,
-                    BaseColor = baseColorHexTriplet, StripeColor = stripeColorHexTriplet
+                    Code = lavenderSkyBlueCode, Name = lavenderSkyBlueName,
+                    TranslatedName = lavenderSkyBlueTranslatedName,
+                    BaseColor = lavenderHexTriplet, StripeColor = skyBlueHexTriplet
                 }
             };
             await InsertAsync(wireColors);
 
 
-            var response = await Client.GetAsync($"api/wirecolor/{colorCode}");
+            var response = await Client.GetAsync($"api/wirecolor/{lavenderSkyBlueCode}");
             response.EnsureSuccessStatusCode();
             var stringResponse = await response.Content.ReadAsStringAsync();
             var model = JsonConvert.DeserializeObject<WireColorViewModel>(stringResponse);
 
             model.ShouldNotBeNull();
             model.Id.ShouldBeGreaterThan(0);
-            model.Code.ShouldBe(colorCode);
-            model.Name.ShouldBe(colorName);
-            model.TranslatedName.ShouldBe(colorTranslatedName);
-            model.BaseWebColor.ShouldBe(baseColorKnownName);
-            model.StripeWebColor.ShouldBe(stripeColorKnownName);
+            model.Code.ShouldBe(lavenderSkyBlueCode);
+            model.Name.ShouldBe(lavenderSkyBlueName);
+            model.TranslatedName.ShouldBe(lavenderSkyBlueTranslatedName);
+            model.BaseWebColor.ShouldBe(lavenderWebColor);
+            model.StripeWebColor.ShouldBe(skyBlueWebColor);
         }
 
         [Fact]
         public async Task ReturnsNoContent()
         {
-            var colorCode = "A6K9TFBM1";
+            var randomCode = RandomString(5);
 
-            var response = await Client.GetAsync($"api/wirecolor/{colorCode}");
+            var response = await Client.GetAsync($"api/wirecolor/{randomCode}");
             response.EnsureSuccessStatusCode();
             response.StatusCode.ShouldBe(HttpStatusCode.NoContent);
         }

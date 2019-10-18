@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\ei-utils\ei-utils.csproj" />
     <ProjectReference Include="..\..\src\ei-web-api\ei-web-api.csproj" />
     <ProjectReference Include="..\ei-slice\ei-slice.csproj" />
   </ItemGroup>
