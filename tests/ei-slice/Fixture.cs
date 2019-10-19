@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Dapper.Contrib.Extensions;
 using ei_infrastructure.Data;
+using ei_slice.POCOs;
 using ei_web_api;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -79,6 +80,7 @@ namespace ei_slice
 
         public static Task InsertAsync<TEntity>(TEntity entity) where TEntity : class
         {
+            Initialize.TestDataAsync().ConfigureAwait(false);
             return ExecuteDbContextAsync(db => db.InsertAsync(entity));
         }
 
@@ -95,6 +97,17 @@ namespace ei_slice
 
                 return mediator.Send(request);
             });
+        }
+
+        internal static Task<TestSessionData> FindTestSessionDataAsync(TestSessionDataId testSessionId)
+        {
+            return ExecuteDbContextAsync(db => db.GetAsync<TestSessionData>(testSessionId));
+        }
+
+        public static Task InsertTestSessionDataAsync(TestSessionDataId testSessionId)
+        {
+            var testSessionData = new TestSessionData { Id = testSessionId};
+            return ExecuteDbContextAsync(db => db.InsertAsync(testSessionData));
         }
     }
 }
