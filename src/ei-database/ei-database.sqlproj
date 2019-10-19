@@ -60,5 +60,6 @@
   <ItemGroup>
     <Build Include="UserAccount.sql" />
     <Build Include="WireColor.sql" />
+    <Build Include="TestSessionData.sql" />
   </ItemGroup>
 </Project>
