@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using ei_slice;
+using ei_slice.POCOs;
 using ei_web_api;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -25,7 +26,7 @@ namespace ei_functional_tests.Web
 
                 using (provider.CreateScope())
                 {
-                    await Initialize.DatabaseAsync();
+                    await Initialize.DatabaseAsync(TestSessionDataId.FunctionalTests);
                 }
             });
         }

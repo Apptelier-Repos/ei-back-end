@@ -78,7 +78,6 @@ namespace ei_functional_tests.Web.Controllers
             };
             await InsertAsync(wireColors);
 
-
             var response = await Client.GetAsync($"api/wirecolor/{lavenderSkyBlueCode}");
             response.EnsureSuccessStatusCode();
             var stringResponse = await response.Content.ReadAsStringAsync();
