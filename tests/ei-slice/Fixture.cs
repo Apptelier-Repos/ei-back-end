@@ -4,21 +4,23 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Transactions;
 using Dapper.Contrib.Extensions;
+using ei_infrastructure.Data;
+using ei_slice.POCOs;
 using ei_web_api;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Respawn;
 
-namespace ei_integration_tests
+namespace ei_slice
 {
-    public class SliceFixture
+    public class Fixture
     {
         private static readonly IConfigurationRoot Configuration;
         private static readonly Checkpoint Checkpoint;
         private static readonly IServiceScopeFactory ScopeFactory;
 
-        static SliceFixture()
+        static Fixture()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -32,10 +34,13 @@ namespace ei_integration_tests
             var provider = services.BuildServiceProvider();
             ScopeFactory = provider.GetService<IServiceScopeFactory>();
             Checkpoint = new Checkpoint();
-            ei_infrastructure.Data.DbInitializer.InitializeSettings();
+            DbInitializer.InitializeSettings();
         }
 
-        public static Task ResetCheckpoint() => Checkpoint.Reset(Configuration.GetConnectionString("DefaultConnection"));
+        public static Task ResetCheckpoint()
+        {
+            return Checkpoint.Reset(Configuration.GetConnectionString("DefaultConnection"));
+        }
 
         public static async Task<T> ExecuteScopeAsync<T>(Func<IServiceProvider, Task<T>> func)
         {
@@ -50,6 +55,7 @@ namespace ei_integration_tests
                         {
                             result = await func(serviceScope.ServiceProvider).ConfigureAwait(false);
                         }
+
                         transactionScope.Complete();
                     }
 
@@ -68,10 +74,13 @@ namespace ei_integration_tests
         }
 
         public static Task<T> ExecuteDbContextAsync<T>(Func<IDbConnection, Task<T>> func)
-        => ExecuteScopeAsync(sp => func(sp.GetService<IDbConnection>()));
-        
+        {
+            return ExecuteScopeAsync(sp => func(sp.GetService<IDbConnection>()));
+        }
+
         public static Task InsertAsync<TEntity>(TEntity entity) where TEntity : class
         {
+            Initialize.TestDataAsync().ConfigureAwait(false);
             return ExecuteDbContextAsync(db => db.InsertAsync(entity));
         }
 
@@ -88,6 +97,17 @@ namespace ei_integration_tests
 
                 return mediator.Send(request);
             });
+        }
+
+        internal static Task<TestSessionData> FindTestSessionDataAsync(TestSessionDataId testSessionId)
+        {
+            return ExecuteDbContextAsync(db => db.GetAsync<TestSessionData>(testSessionId));
+        }
+
+        public static Task InsertTestSessionDataAsync(TestSessionDataId testSessionId)
+        {
+            var testSessionData = new TestSessionData { Id = testSessionId};
+            return ExecuteDbContextAsync(db => db.InsertAsync(testSessionData));
         }
     }
 }

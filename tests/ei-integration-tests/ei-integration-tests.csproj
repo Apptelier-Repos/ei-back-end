@@ -17,6 +17,7 @@
     <PackageReference Include="Dapper" Version="2.0.30" />
     <PackageReference Include="Dapper.Contrib" Version="2.0.30" />
     <PackageReference Include="FakeItEasy" Version="5.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0" />
@@ -36,7 +37,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\ei-core\ei-core.csproj" />
     <ProjectReference Include="..\..\src\ei-infrastructure\ei-infrastructure.csproj" />
-    <ProjectReference Include="..\..\src\ei-web-api\ei-web-api.csproj" />
+    <ProjectReference Include="..\..\src\ei-utils\ei-utils.csproj" />
+    <ProjectReference Include="..\ei-slice\ei-slice.csproj" />
   </ItemGroup>
 
 </Project>

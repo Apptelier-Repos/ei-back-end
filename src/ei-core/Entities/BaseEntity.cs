@@ -6,8 +6,6 @@ namespace ei_core.Entities
 {
     public abstract class BaseEntity : IIdentifiable, IEquatable<BaseEntity>
     {
-        public int Id { get; }
-
         internal BaseEntity(int id)
         {
             Guard.Against.Zero(id, nameof(id));
@@ -20,6 +18,8 @@ namespace ei_core.Entities
             if (ReferenceEquals(this, other)) return true;
             return Id == other.Id;
         }
+
+        public int Id { get; }
 
         public override bool Equals(object obj)
         {

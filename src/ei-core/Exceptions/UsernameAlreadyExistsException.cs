@@ -12,7 +12,6 @@ namespace ei_core.Exceptions
         public UsernameAlreadyExistsException(string duplicatedUsername) : base(
             $"The username \"{duplicatedUsername}\" already exists.")
         {
-
         }
 
         public UsernameAlreadyExistsException(string duplicatedUsername, Exception innerException) : base(
