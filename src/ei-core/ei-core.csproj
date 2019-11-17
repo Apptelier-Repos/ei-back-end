@@ -7,9 +7,11 @@
 
   <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="1.2.9" />
+    <PackageReference Include="Humanizer" Version="2.7.9" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Entities\TerminalAggregate\" />
     <Folder Include="Specifications\" />
     <Folder Include="Services\" />
   </ItemGroup>
